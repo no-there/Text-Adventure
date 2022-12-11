@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Text Game</title>
+		<link href="style.css" rel="stylesheet" type="text/css" />
+		<script src="https://unpkg.com/typeit@8.7.0/dist/index.umd.js"></script>
+		<script src="script.js"></script>
+	</head>	
+	<body onload="intro()">
+		<div class="intro" id="intro">
+			<span id="introtext">White Space</span>
+		</div>
+		<div class="fight" id="fight">
+			<img class="fight-img" src="/assets/fight.jpg">
+		</div>
+		<div class="textbox" id="textbox"></div>
+		<div class="info">
+			<div class="location">
+				<h1>Location</h1>
+				<span id="location"></span>
+			</div>
+			<div class="objective">
+				<h1>Objective</h1>
+				<span id="objective"></span>
+			</div>
+			<div class="valid">
+				<h1>Valid Commands</h1>
+				<span id="valid"></span>
+			</div>
+		</div>
+		<div contenteditable class="input" id="input" onkeyup="checkInput(event)"></div>
+		<audio id="whiteSpace" inline loop autoplay>
+            <source src="assets/white-space.mp3" type="audio/mpeg">
+        </audio>
+		<audio id="nyctophobia" inline loop>
+            <source src="assets/nyctophobia.mp3" type="audio/mpeg">
+        </audio>
+		<audio id="calm" inline loop>
+            <source src="assets/calm.mp3" type="audio/mpeg">
+        </audio>
+		<audio id="credit" inline loop>
+            <source src="assets/credit.mp3" type="audio/mpeg">
+        </audio>
+	</body>
+</html>

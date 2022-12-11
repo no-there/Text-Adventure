@@ -1,0 +1,161 @@
+@import url("https://fonts.googleapis.com/css?family=Indie Flower");
+
+:root {
+	--background: #fff;
+	--border: #fff;
+	--intro: #fff;
+	--color: #fff;
+	--info: #fff;
+	--box: #fff;
+}
+
+body {
+	font-family: monospace;
+	transition: background 1s ease, color 1s ease; 
+	background: var(--background);
+	overflow: hidden;
+	bottom: 0;
+	color: var(--color);
+	right: 0;
+	left: 0;
+	top: 0;
+}
+
+.intro {
+	transition: color 1s ease; 
+	text-align: center; 
+	transform: translateX(-50%) translateY(-50%);
+	font-size: 100px;
+	position: absolute;
+	z-index: 10;
+	color: var(--intro); 
+	left: 50%;
+	top: 50%;
+}
+
+.fight {
+	padding: 15px;
+	height: 100%;
+	bottom: 0;
+	width: 100%;
+	right: 0;
+	left: 0;
+	top: 0;
+}
+
+.fight-bars {
+	box-sizing: border-box;
+	max-width: 500px;
+	display: none;
+	z-index: 10;
+}
+
+.fight-img {
+	transform: translateX(-50%) translateY(-50%);
+	position: absolute;
+	display: none;
+	z-index: 10;
+	left: 50%;
+	top: 50%;
+}
+
+.textbox {
+	padding-right: 20px;
+	padding-left: 20px;
+	position: absolute;
+	bottom: 50px;
+	left: 0;
+}
+
+.textbox h1 {
+	font-size: 50px;
+}
+
+.textbox p {
+	font-size: 15px;
+}
+
+.textbox-write {
+	font-family: "Indie Flower", sans-serif;
+	font-size: 25px;
+}
+
+.info {
+	position: absolute;
+	display: block;
+	z-index: 0;
+	height: 500px;
+	width: 375px;
+	right: 0;
+	top: 0;
+}
+
+.location {
+	border-radius: 5px;
+	padding-left: 15px;
+	transition: background 1s ease, color 1s ease, border 1s ease; 
+	background: var(--background);
+	position: absolute;
+	display: block;
+	border: 1px solid var(--border);
+	height: 100px;
+	color: var(--info);
+	width: 250px;
+	right: 50px;
+	top: 50px;
+}
+
+
+.objective {
+	border-radius: 5px;
+	padding-left: 15px;
+	transition: background 1s ease, color 1s ease, border 1s ease; 
+	background: var(--background);
+	position: absolute;
+	display: block;
+	border: 1px solid var(--border);
+	height: 100px;
+	color: var(--info);
+	width: 250px;
+	right: 50px;
+	top: 175px;
+}
+
+.valid {
+	padding-bottom: 15px;
+	border-radius: 5px;
+	padding-left: 15px;
+	transition: background 1s ease, color 1s ease, border 1s ease; 
+	background: var(--background);
+	min-height: 100px;
+	position: absolute;
+	display: block;
+	border: 1px solid var(--border);
+	color: var(--info);
+	width: 250px;
+	right: 50px;
+	top: 300px;
+}
+
+.input {
+	padding-left: 10px;
+	user-select: none;
+	line-height: 30px;
+	border-top: 1px solid var(--box);
+	transition: background 1s ease, color 1s ease, border-top 1s ease; 
+	background: var(--background);
+	font-size: 15px;
+	position: absolute;
+	overflow: hidden;
+	z-index: 5;
+	display: block;
+	outline: none;
+	height: 30px;
+	width: 100%;
+	left: 0;
+	top: calc(100% - 30px);
+}
+
+.objective span, .location span, .valid span {
+	font-size: 15px;
+}
