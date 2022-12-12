@@ -1,11 +1,14 @@
-let prefix = ["pickup", "punch", "inv", "pet", "stab", "read", "toggle"];// valid instructions
-let rooms = ["bedroom", "stairs", "kitchen"]; // valid rooms / levels
-let items = ["knife", "bat", "steak"]; // items
-let steak = false; // true when steak is cooked
-let level = ""; // set to current room / level
-let bulb = false; // check if bulb is shattered
-let ken = true; // check if ken is present
-let inv = []; // items in inventory
+
+// comments are overrated
+
+let prefix 	= ["pickup", "punch", "inv", "pet", "stab", "read", "toggle", "leave"]; 
+let health 	= 100;
+let level 	= ""
+let steak 	= false; 
+let note 	= false;
+let bulb 	= false; 
+let ken 	= true; 
+let inv 	= []; 
 
 function intro() {
 	setTimeout(() => {
@@ -20,25 +23,21 @@ function intro() {
 	setTimeout(() => {
 		document.querySelector(":root").style.setProperty("--color", "#000");
 
-		var title = document.createElement("h1");
-
-		new TypeIt(textbox.appendChild(title), {
-			cursor: false,
-			speed: 10,
-		}).type("Steak Adventure").go();
-
-		title.scrollIntoView();
-
 		if (document.cookie != "audio=true") {
-			setTimeout(() => {
-				outputText("<b>Before proceeding, please ensure you have audio enabled for the full experience. To enable, click the lock, then open site settings and select sound/autoplay and force allow it. Afterwards, please reload the page.</b>");
+			var text = document.createElement("h1");
 
-				document.cookie = "audio=true";
-			}, 1000);
+			text.style.fontSize = "25px";
+
+			new TypeIt(textbox.appendChild(text), {
+				cursor: true,
+				speed: 10,
+			}).type("Before proceeding, please ensure you have audio enabled for the full experience. To enable, click the lock, then open site settings and select sound/autoplay and force allow it. Afterwards, please reload the page.").go();
+
+			text.scrollIntoView();
+
+			document.cookie = "audio=true";
 		} else {
-			setTimeout(() => {
-				outputText("You are in a white room. You gaze around. There’s a light hanging above your head, and it’s pitch black on the inside. Ken, your cat, and a kitchen knife are sitting next to you. Find a way out.");
-			}, 2000);
+			outputText("You are in a white room. You look around. There's a light hanging above your head, but it's pitch black on the inside. Weird. Ken, your cat purrs loudly at you. There's knife lying on the floor next to you. Find a way out.");
 
 			setTimeout(() => {
 				document.querySelector(":root").style.setProperty("--border", "#000");
@@ -46,22 +45,22 @@ function intro() {
 
 				setTimeout(() => {
 					infoUpdate("location", "White Space");
-					infoUpdate("objective", "Find a way out.")
+					infoUpdate("objective", "Find a way out.");
 					infoUpdate("valid", "pickup<br>punch<br>inv<br>pet");
-				}, 2000);
+				}, 1000);
+				setTimeout(() => {
+					document.querySelector(":root").style.setProperty("--box", "#000");
+				}, 3000);
 				setTimeout(() => {
 					document.querySelector(":root").style.setProperty("--box", "#000");
 				}, 4000);
-				setTimeout(() => {
-					document.querySelector(":root").style.setProperty("--box", "#000");
-				}, 5000);
 
 				setTimeout(() => {
 					new TypeIt(document.getElementById("input"), {
 						cursor: false,
 						speed: 10,
-					}).type("Type commands out here. Supported commands are listed in the valid commands box in the top right. Use the format action + object. Example: pet Ken - Don't worry - I'll disappear in about 5s...").pause(5000).delete().go();
-				}, 6000);
+					}).type("Type commands here. Supported commands are listed in valid box in top right. Use the format action + object. Example: Pet Ken - Disappearing in 10s...").pause(10000).delete().go();
+				}, 5000);
 			}, 6000);
 		}
 
@@ -69,9 +68,6 @@ function intro() {
 }
 
 function checkInput(e) {
-
-	// fetches player input to process and clears the box 
-
 	if (e.key == "Enter") {
 		command = input.textContent;
 		input.innerHTML = "";
@@ -81,22 +77,10 @@ function checkInput(e) {
 }
 
 function inputProcessor(input) {
-
-	// process user input to run each function / proceed through the game
-
 	if (input == "inv") {
-
-		// list items in inventory
-
 		if (inv.length == 0) {
-
-			// inventory has nothing in it
-
 			outputText("Your inventory is empty.");
 		} else {
-
-			// list items using unordered list
-
 			outputText("You opened your backpack and found:");
 
 			inv.forEach((entry, index) => {
@@ -114,30 +98,21 @@ function inputProcessor(input) {
 
 	if (prefix.includes(cmd[0])) {
 		if (cmd[0] == "toggle" && cmd[1] == "dark") {
-
-			// force overrides page color to dark screen
-
 			outputText("Overriding default and forcing dark mode.");
 			shadeToggle("dark");
-		}
-		if (cmd[0] == "toggle" && cmd[1] == "light") {
-
-			// force overrides page color to light screen
+		} if (cmd[0] == "toggle" && cmd[1] == "light") {
 
 			outputText("Overriding default and forcing light mode.");
 			shadeToggle("light");
-		}
-		if (cmd[0] == "toggle" && cmd[1] == "dead") {
+		} if (cmd[0] == "toggle" && cmd[1] == "fight") {
 
-			// force overrides page color to dead screen
+			outputText("Overriding default and forcing fight mode.");
+			shadeToggle("fight");
+		} if (cmd[0] == "toggle" && cmd[1] == "dead") {
 
 			outputText("Overriding default and forcing dead mode.");
 			shadeToggle("dead");
-		}
-		if (level == "") {
-
-			// first stage of the game 
-
+		} if (level == "") {
 			if (cmd[0] == "pickup" && cmd[1] == "knife") {
 				if (inv.includes("knife")) {
 					outputText("You couldn't find another knife. Hint: You already picked up the knife.");
@@ -150,9 +125,7 @@ function inputProcessor(input) {
 					outputText("You picked up the knife.");
 					inv.push("knife");
 				}
-			}
-
-			if (cmd[0] == "pickup" && cmd[1] == "ken") {
+			} if (cmd[0] == "pickup" && cmd[1] == "ken") {
 				if (ken == true) {
 					outputText("You tried to pickup Ken, but he ran away. Bloody cats.");
 					ken = false;
@@ -164,53 +137,48 @@ function inputProcessor(input) {
 				} else {
 					outputText("Ken ran away earlier.");
 				}
-			}
-
-			if (cmd[0] == "punch" && (cmd[1] == "bulb" || cmd[1] == "light")) {
+			} if (cmd[0] == "punch" && (cmd[1] == "bulb" || cmd[1] == "light")) {
 				if (bulb == false) {
 					outputText("You punch the light. The light shatters everywhere, but the room remains lit. That hurt. Why did you do that?");
 					bulb = true;
 				} else {
 					outputText("The bulb is already shattered.");
 				}
-			}
-
-			if (cmd[0] == "punch" && cmd[1] == "ken") {
+			} if (cmd[0] == "punch" && cmd[1] == "ken") {
 				if (ken == true) {
 					outputText("You considered punching Ken. You psychopath. Why would you do that?");
 				} else {
 					outputText("Ken ran away earlier.");
 				}
-			}
-
-			if (cmd[0] == "pet" && cmd[1] == "ken") {
+			} if (cmd[0] == "pet" && cmd[1] == "ken") {
 				if (ken == true) {
 					outputText("Prrrr.");
 				} else {
 					outputText("Ken ran away earlier.");
 				}
-			}
-
-			if (cmd[0] == "stab" && inv.includes("knife")) {
+			} if (cmd[0] == "stab" && inv.includes("knife")) {
 				if (cmd[1] == "ken") {
 					if (ken == true) {
 						outputText("You considered stabbing Ken. What the hell is wrong with you?");
 					} else {
 						outputText("Ken ran away earlier.");
 					}
-				} else if (cmd[1] == "me") {
+				} else if (cmd[1] == "me" || cmd[1] == "myself") {
 					level = "bedroom";
 
 					outputText("The knife sinks in...");
 
+					inv = [];
+
 					document.getElementById("whiteSpace").pause();
-					document.getElementById("nyctophobia").play();
 
 					setTimeout(() => {
 						shadeToggle("wake");
 					}, 1000);
 
 					setTimeout(() => {
+						document.getElementById("nyctophobia").play();
+
 						document.getElementById("textbox").innerHTML = "";
 
 						infoUpdate("location", "");
@@ -219,8 +187,11 @@ function inputProcessor(input) {
 					}, 4000);
 
 					setTimeout(() => {
-						shadeToggle("dark");
 						document.getElementById("nyctophobia").pause();
+					}, 13000);
+
+					setTimeout(() => {
+						shadeToggle("dark");
 						document.getElementById("calm").play();
 					}, 15000);
 
@@ -236,14 +207,12 @@ function inputProcessor(input) {
 						infoUpdate("location", "Your Bedroom");
 						infoUpdate("objective", "Read the note");
 						infoUpdate("valid", "read");
-					}, 22000);
+					}, 25000);
 				}
 			}
 		} if (level == "bedroom") {
-
-			// level 2 - bedroom 
-
 			if (cmd[0] == "read" && (cmd[1] == "note" || cmd[1] == "letter")) {
+					note = true;
 
 					var text = document.createElement("p");
 					text.classList.add("textbox-write");
@@ -256,25 +225,87 @@ function inputProcessor(input) {
 					text.scrollIntoView();
 
 					setTimeout(() => {
-						outputText("Your stomach growls aggressively. You're hungry. Go downstairs and find a snack. Hint: You don't need to specify an object to interact with to leave the room.")
-					}, 6000);
+						outputText("Your stomach growls aggressively. You're hungry. Go downstairs and find a snack.");
+					}, 9000);
 
 					setTimeout(() => {
 						infoUpdate("objective", "Find something to eat.");
 						infoUpdate("valid", "leave");
-					}, 7000);
+					}, 11000);
+			} if (cmd[0] == "leave" && cmd[1] == "room" && note == true) {
+				room = "stairs";
+
+				outputText("Before you leave your room, you grab a knife.");
+
+				inv.push("knife");
+
+				document.getElementById("calm").pause();
+
+				document.querySelector(":root").style.setProperty("--border", "#000");
+				document.querySelector(":root").style.setProperty("--color", "#000");
+				document.querySelector(":root").style.setProperty("--info", "#000");
+				document.querySelector(":root").style.setProperty("--box", "#000");
+
+				
+				setTimeout(() => {
+					document.getElementById("textbox").innerHTML = "";
+				}, 2000);
+
+				setTimeout(() => {
+					document.querySelector(":root").style.setProperty("--color", "#fff");
+				}, 3000);
+
+				setTimeout(() => {
+					outputText("The hallway is pitch black.");
+				}, 4000);
+
+				setTimeout(() => {
+					document.getElementById("textbox").innerHTML = "";
+					outputText("Don't panic.");
+				}, 8000);
+
+				setTimeout(() => {
+					document.getElementById("textbox").innerHTML = "";
+					outputText("There's nothing to fear.");
+				}, 12000);
+
+				setTimeout(() => {
+					document.getElementById("textbox").innerHTML = "";
+					outputText("You're safe.");
+				}, 16000);
+
+				setTimeout(() => {
+					document.getElementById("textbox").innerHTML = "";
+					outputText("No one else is here.");
+				}, 20000);
+
+				setTimeout(() => {
+					document.getElementById("textbox").innerHTML = "";
+					outputText("You're alone.");
+				}, 24000);
+
+				setTimeout(() => {
+					document.getElementById("textbox").innerHTML = "";
+					var text = document.createElement("p");
+
+					new TypeIt(textbox.appendChild(text), {
+						cursor: true,
+						speed: 120,
+					}).type("It'll be okay.").go();
+
+					text.scrollIntoView();
+				}, 28000);
+
+				setTimeout(() => {
+					document.getElementById("textbox").innerHTML = "";
+					shadeToggle("fight");
+				}, 36000);
 			}
 		}
-	} else if (cmd[1] == null) {
-
-		// no  object
-
-		outputText("Command format not recognised. Need action + object. Example: pet Ken")
+	} if (cmd[1] == null) {
+		outputText("Command format not recognised. Need action + object. Example: pet Ken");
 	} else {
-
-		// error handler
-
-		outputText("Instruction not recognised. Check it is a valid command.")
+		outputText("Instruction not recognised. Check it is a valid command.");
 	}
 }
 
@@ -304,12 +335,35 @@ function shadeToggle(shade) {
 		setTimeout(() => {
 			document.querySelector(":root").style.setProperty("--color", "#000");
 		}, 2000);
+		setTimeout(() => {
+			document.getElementById("stabbed").style.display = "block";
+			document.getElementById("stabbed").style.opacity = "1";
+		}, 7750);
+		setTimeout(() => {
+			document.getElementById("stabbed").style.display = "none";
+		}, 12000);
 	} else if (shade == "fight") {
 		document.querySelector(":root").style.setProperty("--background", "#000");
 		document.querySelector(":root").style.setProperty("--border", "#000");
-		document.querySelector(":root").style.setProperty("--color", "#f00");
+		document.querySelector(":root").style.setProperty("--color", "#000");
 		document.querySelector(":root").style.setProperty("--info", "#000");
 		document.querySelector(":root").style.setProperty("--box", "#000");
+
+		setTimeout(() => {
+			document.getElementById("monster-img").style.display = "block";
+			document.getElementById("monster-img").classList.add("fadein-img");
+		}, 5000);
+
+		setTimeout(() => {
+			document.getElementById("monster-bar-label").style.display = "block";
+			document.getElementById("monster-bar-label").classList.add("fadein");
+			document.getElementById("health-bar-label").style.display = "block";
+			document.getElementById("health-bar-label").classList.add("fadein");
+			document.getElementById("monster-bar").style.display = "block";
+			document.getElementById("monster-bar").classList.add("fadein");
+			document.getElementById("health-bar").style.display = "block";
+			document.getElementById("health-bar").classList.add("fadein");
+		}, 22000);
 	} else if (shade == "dead") {
 		document.getElementById("input").style.display = "none";
 
@@ -328,9 +382,6 @@ function shadeToggle(shade) {
 }
 
 function infoUpdate(box, info) {
-
-	// updates info boxes at top with cool animation
-
 	document.getElementById(box).textContent = "";
 
 	new TypeIt(document.getElementById(box), {
@@ -340,9 +391,6 @@ function infoUpdate(box, info) {
 }
 
 function outputText(txt) {
-
-	// add text to a new paragraph, append to textbox with cool type animation and scroll down to it
-
 	var text = document.createElement("p");
 
 	new TypeIt(textbox.appendChild(text), {
