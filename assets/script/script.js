@@ -302,17 +302,10 @@ function inputProcessor(input) {
 				}, 36000);
 			}
 		}
-	} if (cmd[1] == null) {
-		outputText("Command format not recognised. Need action + object. Example: pet Ken");
-	} else {
-		outputText("Instruction not recognised. Check it is a valid command.");
 	}
 }
 
 function shadeToggle(shade) {
-
-	// manages page colour
-
 	if (shade == "dark") {
 		document.querySelector(":root").style.setProperty("--background", "#000");
 		document.querySelector(":root").style.setProperty("--border", "#fff");
