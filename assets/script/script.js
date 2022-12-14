@@ -2,9 +2,11 @@
 // comments are overrated
 
 let prefix 	= ["pickup", "punch", "inv", "pet", "stab", "read", "toggle", "leave"]; 
+
+let monster	= 100;
 let health 	= 100;
 let level 	= ""
-let steak 	= false; 
+let bread 	= false; 
 let note 	= false;
 let bulb 	= false; 
 let ken 	= true; 
@@ -164,6 +166,7 @@ function inputProcessor(input) {
 					inv = [];
 
 					document.getElementById("whiteSpace").pause();
+					document.getElementById("whiteSpace").currentTime = 0;
 
 					setTimeout(() => {
 						shadeToggle("wake");
@@ -181,6 +184,7 @@ function inputProcessor(input) {
 
 					setTimeout(() => {
 						document.getElementById("nyctophobia").pause();
+						document.getElementById("nyctophobia").currentTime = 0;
 					}, 12970);
 
 					setTimeout(() => {
@@ -233,6 +237,7 @@ function inputProcessor(input) {
 				inv.push("knife");
 
 				document.getElementById("calm").pause();
+				document.getElementById("calm").currentTime = 0;
 
 				document.getElementById("input").style.display = "none";
 				
@@ -370,7 +375,7 @@ function shadeToggle(shade) {
 		}, 2000);
 		setTimeout(() => {
 			document.getElementById("stabbed").style.display = "block";
-		}, 7500);
+		}, 7625);
 		setTimeout(() => {
 			document.getElementById("stabbed").style.display = "none";
 		}, 12000);
@@ -382,6 +387,7 @@ function shadeToggle(shade) {
 		document.querySelector(":root").style.setProperty("--box", "#000");
 
 		setTimeout(() => {
+			document.getElementById("location-box").style.display = "none";
 			document.getElementById("monster-img").style.display = "block";
 			document.getElementById("monster-img").classList.add("fadein-img");
 		}, 5000);
@@ -399,6 +405,17 @@ function shadeToggle(shade) {
 			document.getElementById("attack").style.display = "block";
 			document.getElementById("attack").classList.add("fadein");
 			document.getElementById("cool").style.display = "block";
+
+			setTimeout(() => {
+				document.getElementById("monster").classList.add("expand-bar");
+				document.getElementById("health").classList.add("expand-bar");
+			}, 1000);
+			setTimeout(() => {
+				document.getElementById("health").classList.add("bar-anim");
+				document.getElementById("monster").classList .add("bar-anim");
+				document.getElementById("health").classList.remove("expand-bar");
+				document.getElementById("monster").classList.remove("expand-bar");
+			}, 6000);
 		}, 22000);
 	} else if (shade == "dead") {
 		document.getElementById("input").style.display = "none";
@@ -407,19 +424,117 @@ function shadeToggle(shade) {
 		document.querySelector(":root").style.setProperty("--border", "#000");
 		document.querySelector(":root").style.setProperty("--color", "#f00");
 		document.querySelector(":root").style.setProperty("--info", "#000");
-
-		document.getElementById("whiteSpace").pause();
-		document.getElementById("nyctophobia").play();
+		
+		document.getElementById("death").play();
 
 		setTimeout(() => {
-			document.querySelector(":root").style.setProperty("--color", "#000");
+			document.querySelector(":root").style.setProperty("--death", "#000");
 		}, 5000);
+	} else if (shade == "dead2") {
+		document.getElementById("input").style.display = "none";
+
+		document.querySelector(":root").style.setProperty("--background", "#000");
+		document.querySelector(":root").style.setProperty("--border", "#000");
+		document.querySelector(":root").style.setProperty("--info", "#000");
+		
+		document.getElementById("death").play();
+
+		setTimeout(() => {
+			document.getElementById("death-screen").style.display = "block";
+		}, 5000);
+
+		setTimeout(() => {
+			document.querySelector(":root").style.setProperty("--death", "#fff");
+		}, 7000);
+
+		setTimeout(() => {
+			document.querySelector(":root").style.setProperty("--death", "#000");
+			
+			document.getElementById("death-screen").style.opacity = 0;
+		}, 50000);
+
+		setTimeout(() => {
+			document.querySelector(":root").style.setProperty("--death", "#000");
+			
+			document.getElementById("monster").style.display = "none";
+		}, 60000);
 	}
 }
 
-function attack() {}
+function attack() {
+	if (health != 0 && health - 10 != 0) {
+		health -= 10;
+	} else if (health <= 0 || health - 10 <= 0) {
+		document.getElementById("monster-bar-label").style.display = "none";
+		document.getElementById("health-bar-label").style.display = "none";
+		document.getElementById("monster-bar").style.display = "none";
+		document.getElementById("health-bar").style.display = "none";
+		document.getElementById("attack").style.display = "none";
+		document.getElementById("input").style.display = "none";
+		document.getElementById("cool").style.display = "none";
 
-function calm() {}
+		document.getElementById("nyctophobia").pause();
+		document.getElementById("nyctophobia").currentTime = 0;
+
+		shadeToggle("dead2");
+	} if (monster != 100) {
+		monster += 10;
+	}
+
+	document.getElementById("cool").style.opacity = (parseFloat(getComputedStyle(document.getElementById("cool")).getPropertyValue("opacity")) + 0.05);
+
+	document.getElementById("monster").style.width = monster + "%";
+	document.getElementById("health").style.width = health + "%";
+}
+
+function calm() {
+	if (monster != 0 && monster - 10 != 0) {
+		monster -= 10;
+	} else if (monster <= 0 || monster - 10 <= 0) {
+		document.getElementById("monster-bar-label").style.display = "none";
+		document.getElementById("health-bar-label").style.display = "none";
+		document.getElementById("monster-bar").style.display = "none";
+		document.getElementById("health-bar").style.display = "none";
+		document.getElementById("attack").style.display = "none";
+		document.getElementById("input").style.display = "block";
+		document.getElementById("cool").style.display = "none";
+		
+		document.getElementById("location-box").style.display = "block";
+
+		document.getElementById("nyctophobia").pause();
+		document.getElementById("nyctophobia").currentTime = 0;
+
+		document.querySelector(":root").style.setProperty("--background", "#000");
+		document.querySelector(":root").style.setProperty("--border", "#000");
+		document.querySelector(":root").style.setProperty("--color", "#000");
+		document.querySelector(":root").style.setProperty("--info", "#000");
+		document.querySelector(":root").style.setProperty("--box", "#000");
+
+		document.getElementById("monster-img").classList.remove("fadein-img");
+		document.getElementById("monster-img").classList.add("fadeout-img");
+		document.getElementById("omori-img").classList.add("fadein-img");
+		document.getElementById("omori-img").style.display = "block";
+
+		setTimeout(() => {
+			document.getElementById("monster-img").style.display = "none";
+		}, 7500);
+
+		setTimeout(() => {
+			document.getElementById("omori-img").style.display = "none";
+
+			infoUpdate("location", "");
+			infoUpdate("objective", "");
+			infoUpdate("valid", "");
+
+			shadeToggle("dark");
+		}, 10000);
+	}
+
+	document.getElementById("cool").style.opacity = (parseFloat(getComputedStyle(document.getElementById("cool")).getPropertyValue("opacity")) + 0.05);
+
+	document.getElementById("monster").style.width = monster + "%";
+	document.getElementById("health").style.width = health + "%";
+}
 
 function infoUpdate(box, info) {
 	document.getElementById(box).textContent = "";
