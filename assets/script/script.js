@@ -42,25 +42,18 @@ function intro() {
 			setTimeout(() => {
 				document.querySelector(":root").style.setProperty("--border", "#000");
 				document.querySelector(":root").style.setProperty("--info", "#000");
+				
+				outputText("Type commands below. Supported commands are listed in valid box in top right. Use the format action + object. Example: Pet Ken");
 
 				setTimeout(() => {
 					infoUpdate("location", "White Space");
 					infoUpdate("objective", "Find a way out.");
 					infoUpdate("valid", "pickup<br>punch<br>inv<br>pet");
 				}, 1000);
+
 				setTimeout(() => {
 					document.querySelector(":root").style.setProperty("--box", "#000");
 				}, 3000);
-				setTimeout(() => {
-					document.querySelector(":root").style.setProperty("--box", "#000");
-				}, 4000);
-
-				setTimeout(() => {
-					new TypeIt(document.getElementById("input"), {
-						cursor: false,
-						speed: 10,
-					}).type("Type commands here. Supported commands are listed in valid box in top right. Use the format action + object. Example: Pet Ken - Disappearing in 10s...").pause(10000).delete().go();
-				}, 5000);
 			}, 6000);
 		}
 
@@ -188,7 +181,7 @@ function inputProcessor(input) {
 
 					setTimeout(() => {
 						document.getElementById("nyctophobia").pause();
-					}, 13000);
+					}, 12970);
 
 					setTimeout(() => {
 						shadeToggle("dark");
@@ -219,20 +212,20 @@ function inputProcessor(input) {
 
 					new TypeIt(textbox.appendChild(text), {
 						cursor: false,
-						speed: 10,
+						speed: 15,
 					}).type("<br>It's mommy. I can't wait for you to join me in the new home! <br>With just the two of us, it will be wonderful. Sadly, the energy <br>company might cut our power to the old home in the night <br> as it is taking the men with a van longer than they said <br> to move. If you wake up in the night, remember there <br> aren't any monsters, all you need to do is calm down.<br><br> Love, mommy <3<br>").go();
 				
 					text.scrollIntoView();
 
 					setTimeout(() => {
-						outputText("Your stomach growls aggressively. You're hungry. Go downstairs and find a snack.");
-					}, 9000);
+						outputText("Your stomach growls aggressively. You're hungry. Leave your bedroom, and find something to eat in the kitchen.");
+					}, 10000);
 
 					setTimeout(() => {
 						infoUpdate("objective", "Find something to eat.");
 						infoUpdate("valid", "leave");
 					}, 11000);
-			} if (cmd[0] == "leave" && cmd[1] == "room" && note == true) {
+			} if (cmd[0] == "leave" && (cmd[1] == "room" || cmd[1] == "bedroom") && note == true) {
 				room = "stairs";
 
 				outputText("Before you leave your room, you grab a knife.");
@@ -241,48 +234,94 @@ function inputProcessor(input) {
 
 				document.getElementById("calm").pause();
 
-				document.querySelector(":root").style.setProperty("--border", "#000");
-				document.querySelector(":root").style.setProperty("--color", "#000");
-				document.querySelector(":root").style.setProperty("--info", "#000");
-				document.querySelector(":root").style.setProperty("--box", "#000");
-
+				document.getElementById("input").style.display = "none";
 				
 				setTimeout(() => {
-					document.getElementById("textbox").innerHTML = "";
-				}, 2000);
+					document.querySelector(":root").style.setProperty("--border", "#000");
+					document.querySelector(":root").style.setProperty("--color", "#000");
+					document.querySelector(":root").style.setProperty("--info", "#000");
+					document.querySelector(":root").style.setProperty("--box", "#000");
 
+				}, 5000);
+
+				setTimeout(() => {
+					document.getElementById("textbox").innerHTML = "";
+				}, 6000);
+				
 				setTimeout(() => {
 					document.querySelector(":root").style.setProperty("--color", "#fff");
-				}, 3000);
+				}, 7000);
 
 				setTimeout(() => {
-					outputText("The hallway is pitch black.");
-				}, 4000);
+					var text = document.createElement("p");
 
-				setTimeout(() => {
-					document.getElementById("textbox").innerHTML = "";
-					outputText("Don't panic.");
+					new TypeIt(textbox.appendChild(text), {
+						cursor: true,
+						speed: 20,
+					}).type("It's dark and eerie in the hallway.").go();
+
+					text.scrollIntoView();
 				}, 8000);
 
 				setTimeout(() => {
 					document.getElementById("textbox").innerHTML = "";
-					outputText("There's nothing to fear.");
-				}, 12000);
+					var text = document.createElement("p");
+
+					new TypeIt(textbox.appendChild(text), {
+						cursor: true,
+						speed: 20,
+					}).type("Don't panic.").go();
+
+					text.scrollIntoView();
+				}, 11000);
 
 				setTimeout(() => {
 					document.getElementById("textbox").innerHTML = "";
-					outputText("You're safe.");
-				}, 16000);
+					var text = document.createElement("p");
+
+					new TypeIt(textbox.appendChild(text), {
+						cursor: true,
+						speed: 40,
+					}).type("Nothing to fear.").go();
+
+					text.scrollIntoView();
+				}, 15000);
 
 				setTimeout(() => {
 					document.getElementById("textbox").innerHTML = "";
-					outputText("No one else is here.");
-				}, 20000);
+					var text = document.createElement("p");
+
+					new TypeIt(textbox.appendChild(text), {
+						cursor: true,
+						speed: 60,
+					}).type("You're safe.").go();
+
+					text.scrollIntoView();
+				}, 19000);
 
 				setTimeout(() => {
 					document.getElementById("textbox").innerHTML = "";
-					outputText("You're alone.");
-				}, 24000);
+					var text = document.createElement("p");
+
+					new TypeIt(textbox.appendChild(text), {
+						cursor: true,
+						speed: 80,
+					}).type("No one else is here.").go();
+
+					text.scrollIntoView();
+				}, 23000);
+
+				setTimeout(() => {
+					document.getElementById("textbox").innerHTML = "";
+					var text = document.createElement("p");
+
+					new TypeIt(textbox.appendChild(text), {
+						cursor: true,
+						speed: 100,
+					}).type("You're alone.").go();
+
+					text.scrollIntoView();
+				}, 27000);
 
 				setTimeout(() => {
 					document.getElementById("textbox").innerHTML = "";
@@ -294,12 +333,13 @@ function inputProcessor(input) {
 					}).type("It'll be okay.").go();
 
 					text.scrollIntoView();
-				}, 28000);
+				}, 31000);
 
 				setTimeout(() => {
 					document.getElementById("textbox").innerHTML = "";
+					document.getElementById("nyctophobia").play();
 					shadeToggle("fight");
-				}, 36000);
+				}, 39000);
 			}
 		}
 	}
@@ -330,8 +370,7 @@ function shadeToggle(shade) {
 		}, 2000);
 		setTimeout(() => {
 			document.getElementById("stabbed").style.display = "block";
-			document.getElementById("stabbed").style.opacity = "1";
-		}, 7750);
+		}, 7500);
 		setTimeout(() => {
 			document.getElementById("stabbed").style.display = "none";
 		}, 12000);
@@ -356,6 +395,10 @@ function shadeToggle(shade) {
 			document.getElementById("monster-bar").classList.add("fadein");
 			document.getElementById("health-bar").style.display = "block";
 			document.getElementById("health-bar").classList.add("fadein");
+
+			document.getElementById("attack").style.display = "block";
+			document.getElementById("attack").classList.add("fadein");
+			document.getElementById("cool").style.display = "block";
 		}, 22000);
 	} else if (shade == "dead") {
 		document.getElementById("input").style.display = "none";
@@ -373,6 +416,10 @@ function shadeToggle(shade) {
 		}, 5000);
 	}
 }
+
+function attack() {}
+
+function calm() {}
 
 function infoUpdate(box, info) {
 	document.getElementById(box).textContent = "";
