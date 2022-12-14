@@ -5,6 +5,7 @@
 	--border: #fff;
 	--intro: #fff;
 	--color: #fff;
+	--death: #00000000;
 	--info: #fff;
 	--box: #fff;
 }
@@ -31,6 +32,27 @@ body {
 	color: var(--intro); 
 	left: 50%;
 	top: 50%;
+}
+
+.death {
+	transition: color 20s ease, opacity 20s ease; 
+	text-align: center; 
+	transform: translateX(-50%) translateY(-50%);
+	font-size: 100px;
+	position: absolute;
+	display: none;
+	z-index: 50;
+	color: var(--death); 
+	left: 50%;
+	top: 50%;
+}
+
+.death span {
+	font-size: 100px;
+}
+
+.death p {
+	font-size: 15px;
 }
 
 .fight {
@@ -112,7 +134,7 @@ body {
 	position: absolute;
 	z-index: 12;
 	height: 100%;
-	width: 100%;
+	width: 0%;
 }
 
 .monster {
@@ -120,7 +142,7 @@ body {
 	position: absolute;
 	z-index: 12;
 	height: 100%;
-	width: 100%;
+	width: 0%;
 }
 
 .health-bar {
@@ -154,15 +176,35 @@ body {
 }
 
 .fadein {
-	animation: fadeIn ease 1s; 
-	-moz-animation: fadeIn ease 1s;
 	-webkit-animation: fadeIn ease 1s;
+	-moz-animation: fadeIn ease 1s;
+	animation: fadeIn ease 1s; 
 }
 
 .fadein-img {
-	animation: fadeIn ease 10s; 
-	-moz-animation: fadeIn ease 10s;
-	-webkit-animation: fadeIn ease 10s;
+	-webkit-animation: fadeIn ease 7.5s;
+	-moz-animation: fadeIn ease 7.5s;
+	animation: fadeIn ease 7.5s; 
+}
+
+.fadeout-img {
+	-webkit-animation: fadeOut ease 7.5s;
+	-moz-animation: fadeOut ease 7.5s;
+	animation: fadeOut ease 7.5s; 
+}
+
+.expand-bar {
+	-webkit-transition: width ease-in-out 2s;
+	-moz-transition: width ease-in-out 2s;
+	transition: width ease-in-out 2s; 
+	width: 100%;
+}
+
+.bar-anim {
+	-webkit-transition: width ease .5s;
+	-moz-transition: width ease .5s;
+	transition: width ease .5s; 
+	width: 100%;
 }
 
 .textbox {
@@ -267,6 +309,11 @@ body {
 }
 
 @keyframes fadeIn {
-	0%   { opacity:0; }
-	100% { opacity:1; }
-  }
+	0%   { opacity: 0; }
+	100% { opacity: 1; }
+}
+
+@keyframes fadeOut {
+	0%   { opacity: 1; }
+	100% { opacity: 0; }
+}
