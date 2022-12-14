@@ -46,20 +46,39 @@ body {
 
 .button {
 	text-decoration: none;
+	font-family: monospace;
 	background: #fff; 
 	text-align: center;
 	font-size: 16px;
+	z-index: 10;
 	padding: 15px 32px;
 	display: none;
-	color: #000;
 	border: none;
+	color: #000;
 }
+
+.attack-button {
+	transform: translateX(-50%) translateY(-50%);
+	position: absolute;
+	display: none;
+	left: 50%;
+	top: 90%;
+}
+
+.cool-button {
+	transform: translateX(-50%) translateY(-50%);
+	position: absolute;
+	display: none;
+	opacity: 0;
+	right: 5%;
+	top: 90%;
+}
+
 
 .stabbed {
 	position: absolute;
 	display: none;
 	z-index: 10;
-	opacity: 0;
 	right: 250px;
 	top: 0;
 }
@@ -118,13 +137,20 @@ body {
 	top: 50px;
 }
 
-.fight-img {
+.centre-img {
 	transform: translateX(-50%) translateY(-50%);
 	position: absolute;
 	display: none;
-	z-index: 10;
 	left: 50%;
 	top: 50%;
+}
+
+.monster-img {
+	z-index: 10;
+}
+
+.omori-img {
+	z-index: 11;
 }
 
 .fadein {
@@ -134,9 +160,9 @@ body {
 }
 
 .fadein-img {
-	animation: fadeIn ease 15s; 
-	-moz-animation: fadeIn ease 15s;
-	-webkit-animation: fadeIn ease 15s;
+	animation: fadeIn ease 10s; 
+	-moz-animation: fadeIn ease 10s;
+	-webkit-animation: fadeIn ease 10s;
 }
 
 .textbox {
