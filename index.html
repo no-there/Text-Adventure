@@ -17,7 +17,14 @@
 		<!--Intro-->
 
 		<div class="intro" id="intro">
-			<span id="introtext">untitled_game.js</span>
+			<span>untitled_game.js</span>
+		</div>
+
+		<!--Death-->
+
+		<div class="death" id="death-screen">
+			<span>You died.</span>
+			<p>Reload the page to restart the game.</p>
 		</div>
 
 		<!--Fight-->
@@ -58,15 +65,15 @@
 		<!--Info-->
 
 		<div class="info">
-			<div class="location">
+			<div id="location-box" class="location">
 				<h1>Location</h1>
 				<span id="location"></span>
 			</div>
-			<div class="objective">
+			<div id="objective-box" class="objective">
 				<h1>Objective</h1>
 				<span id="objective"></span>
 			</div>
-			<div class="valid">
+			<div id="valid-box" class="valid">
 				<h1>Valid Commands</h1>
 				<span id="valid"></span>
 			</div>
@@ -86,6 +93,9 @@
         </audio>
 		<audio id="calm" inline loop>
             <source src="assets/audio/calm.mp3" type="audio/mpeg">
+        </audio>
+		<audio id="death" inline>
+            <source src="assets/audio/death.mp3" type="audio/mpeg">
         </audio>
 		<audio id="credit" inline loop>
             <source src="assets/audio/credit.mp3" type="audio/mpeg">
