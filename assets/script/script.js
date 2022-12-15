@@ -1,7 +1,7 @@
 
 // comments are overrated
 
-let prefix 	= ["pickup", "punch", "inv", "pet", "stab", "read", "toggle", "leave"]; 
+let prefix 	= ["pickup", "punch", "inv", "pet", "stab", "read", "leave", "enter", "eat"]; 
 
 let monster	= 100;
 let health 	= 100;
@@ -92,22 +92,7 @@ function inputProcessor(input) {
 	cmd[1] = cmd[1].toLowerCase();
 
 	if (prefix.includes(cmd[0])) {
-		if (cmd[0] == "toggle" && cmd[1] == "dark") {
-			outputText("Overriding default and forcing dark mode.");
-			shadeToggle("dark");
-		} if (cmd[0] == "toggle" && cmd[1] == "light") {
-
-			outputText("Overriding default and forcing light mode.");
-			shadeToggle("light");
-		} if (cmd[0] == "toggle" && cmd[1] == "fight") {
-
-			outputText("Overriding default and forcing fight mode.");
-			shadeToggle("fight");
-		} if (cmd[0] == "toggle" && cmd[1] == "dead") {
-
-			outputText("Overriding default and forcing dead mode.");
-			shadeToggle("dead");
-		} if (level == "") {
+		if (level == "") {
 			if (cmd[0] == "pickup" && cmd[1] == "knife") {
 				if (inv.includes("knife")) {
 					outputText("You couldn't find another knife. Hint: You already picked up the knife.");
@@ -230,9 +215,9 @@ function inputProcessor(input) {
 						infoUpdate("valid", "leave");
 					}, 11000);
 			} if (cmd[0] == "leave" && (cmd[1] == "room" || cmd[1] == "bedroom") && note == true) {
-				room = "stairs";
+				room = "hallway";
 
-				outputText("Before you leave your room, you grab a knife.");
+				outputText("Before you leave your room, you grab a knife. You know, just in case. ");
 
 				inv.push("knife");
 
@@ -323,7 +308,7 @@ function inputProcessor(input) {
 					new TypeIt(textbox.appendChild(text), {
 						cursor: true,
 						speed: 100,
-					}).type("You're alone.").go();
+					}).type("The doors are locked.").go();
 
 					text.scrollIntoView();
 				}, 27000);
@@ -345,6 +330,79 @@ function inputProcessor(input) {
 					document.getElementById("nyctophobia").play();
 					shadeToggle("fight");
 				}, 39000);
+			}
+		} if (level == "hallway") {
+			if (cmd[0] == "enter" && cmd[1] == "kitchen") {
+				level = "kitchen";
+
+				document.getElementById("calm").play();
+
+				outputText("You entered the kitchen.");
+
+				infoUpdate("location", "Kitchen");
+
+				setTimeout(() => {
+					outputText("You search the kitchen for food. There isn't much food left, but there is some bread.");
+				}, 1000);
+
+				setTimeout(() => {
+					infoUpdate("objective", "Eat the bread.");
+					infoUpdate("valid", "eat");
+				}, 3000);
+			}
+		} if (level == "kitchen") {
+			if (cmd[0] == "eat" && cmd[1] == "bread") {
+				outputText("You eat the bread. It's stale, but it's better than nothing.");
+
+				setTimeout(() => {
+					outputText("You feel a little better.");
+				}, 2000);
+
+				setTimeout(() => {
+					document.querySelector(":root").style.setProperty("--border", "#000");
+					document.querySelector(":root").style.setProperty("--color", "#000");
+					document.querySelector(":root").style.setProperty("--info", "#000");
+					document.querySelector(":root").style.setProperty("--box", "#000");
+				}, 6000);
+
+				setTimeout(() => {
+					document.getElementById("textbox").innerHTML = "";
+				}, 7000);
+
+				setTimeout(() => {
+					document.getElementById("calm").pause();
+					
+					document.querySelector(":root").style.setProperty("--color", "#fff");
+				}, 8000);
+
+				setTimeout(() => {
+					document.querySelector(":root").style.setProperty("--color", "#000");
+
+					document.getElementById("background").style.display = "block";
+
+					document.getElementById("credit").play();
+				}, 13000);
+
+				setTimeout(() => {
+					document.getElementById("objective-box").style.display = "none";
+					document.getElementById("location-box").style.display = "none";
+					document.getElementById("valid-box").style.display = "none";
+					document.getElementById("input").style.display = "none";
+
+					document.getElementById("textbox").innerHTML = "";
+				}, 16000);
+
+				setTimeout(() => {
+					document.querySelector(":root").style.setProperty("--color", "#fff");
+				}, 17000);
+
+				setTimeout(() => {
+					outputText("Thank you for playing! I hope you enjoyed it. If you did, please consider sharing it with your friends. If you didn't, please consider sharing it with your enemies. Either way, I hope you have a great day! <3");
+				}, 19000);
+
+				setTimeout(() => {
+					outputText("Credits:<br>・Entirely coded in JavaScript, HTML, and CSS by Deon Leggett<br>・Graphics from Omori<br>・Music from Omori<br>・Indie Flower font from Google Fonts");
+				}, 23000);
 			}
 		}
 	}
@@ -476,7 +534,20 @@ function attack() {
 		document.getElementById("nyctophobia").pause();
 		document.getElementById("nyctophobia").currentTime = 0;
 
-		shadeToggle("dead2");
+		document.getElementById("monster-img").classList.remove("fadein-img");
+		document.getElementById("monster-img").classList.add("fadeout-img");
+		document.getElementById("death-img").classList.add("fadein-img");
+		document.getElementById("death-img").style.display = "block";
+
+		setTimeout(() => {
+			document.getElementById("monster-img").style.display = "none";
+		}, 7500);
+
+		setTimeout(() => {
+			document.getElementById("death-img").style.display = "none";
+			
+			shadeToggle("dead2");
+		}, 10000);
 	} if (monster != 100) {
 		monster += 10;
 	}
@@ -520,6 +591,8 @@ function calm() {
 		}, 7500);
 
 		setTimeout(() => {
+			level = "hallway";
+
 			document.getElementById("omori-img").style.display = "none";
 
 			infoUpdate("location", "");
@@ -528,6 +601,24 @@ function calm() {
 
 			shadeToggle("dark");
 		}, 10000);
+
+		setTimeout(() => {
+			outputText("Panting, you collapse to the floor. You're exhausted. You're alone. It's okay though. No one else is here.");
+		}, 15000);
+
+		setTimeout(() => {
+			outputText("You start to slowly catch your breath, and your heart stops pounding your ears as if they're drums.");
+		}, 20000);
+
+		setTimeout(() => {
+			outputText("You're still hungry. Enter the kitchen.");
+		}, 23000);
+
+		setTimeout(() => {
+			infoUpdate("location", "Hallway");
+			infoUpdate("objective", "Grab food from the kitchen");
+			infoUpdate("valid", "enter");
+		}, 24000);
 	}
 
 	document.getElementById("cool").style.opacity = (parseFloat(getComputedStyle(document.getElementById("cool")).getPropertyValue("opacity")) + 0.05);
